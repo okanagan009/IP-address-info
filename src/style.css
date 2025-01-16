@@ -130,8 +130,15 @@
 }
 
 .map {
-    min-height: calc(100vh - 200px);
+    width: 100%;
+    min-height: calc(100vh - 285px);
 }
+
+
+[class*="copyrights-pane"] {
+    display: none !important;
+}
+
 
 @media (min-width: 1024px) {
     .info {
