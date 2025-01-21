@@ -76,15 +76,15 @@
 }
 
 .info {
-    width: calc(100% - 30px);
+    width: calc(100% - 90px);
     background-color: white;
     padding: 20px;
     border-radius: 15px;
-
-    display: flex;
+    display: flex
+;
     flex-direction: column;
     position: absolute;
-    left: 15px;
+    left: 45px;
     z-index: 10000;
 }
 
@@ -131,7 +131,7 @@
 
 .map {
     width: 100%;
-    min-height: calc(100vh - 285px);
+    min-height: calc(100vh - 279px);
 }
 
 
@@ -164,6 +164,6 @@
     }
 
     .info__block-title {
-        font-size: 24px;
+        font-size: 20px;
     }
 }

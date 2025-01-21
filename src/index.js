@@ -8,6 +8,43 @@ const locationInfo = document.querySelector('#location');
 const timezoneInfo = document.querySelector('#timezone');
 const ispInfo = document.querySelector('#isp');
 
+let mapInstance = null; // Храним ссылку на текущую карту
+
+// Инициализация новой карты при загрузке страницы
+ymaps.ready(() => {
+    showMap(55.751244, 37.618423, false, 4);
+});
+
+function showMap(lat, lng, addPlacemark = true, zoom = 11) {
+
+    // Удаляем предыдущую карту, если она существует
+    if (mapInstance) {
+        mapInstance.destroy();
+        mapInstance = null;
+    }
+
+    // Инициализация новой карты
+    mapInstance = new ymaps.Map('map', {
+        center: [lat, lng],
+        zoom: zoom,
+    });
+
+    // Создание метки
+    if (addPlacemark) {
+        const placemark = new ymaps.Placemark([lat, lng]);
+        mapInstance.geoObjects.add(placemark);
+    }
+
+    // Удаляем лишние элементы управления
+    mapInstance.controls.remove('geolocationControl');
+    mapInstance.controls.remove('searchControl');
+    mapInstance.controls.remove('trafficControl');
+    mapInstance.controls.remove('typeSelector');
+    mapInstance.controls.remove('fullscreenControl');
+    mapInstance.controls.remove('rulerControl');
+    mapInstance.behaviors.disable(['scrollZoom']);
+}
+
 btn.addEventListener('click', getData);
 ipInput.addEventListener('keydown', handleKey);
 
@@ -31,28 +68,5 @@ function setInfo(mapData) {
     locationInfo.innerText = mapData.country + " " + mapData.region;
     timezoneInfo.innerText = " " + mapData.timezone.utc;
     ispInfo.innerText = mapData.connection.isp;
+    showMap(mapData.latitude, mapData.longitude);
 }
-
-ymaps.ready(() => {
-    // Инициализация карты
-    const map = new ymaps.Map('map', {
-        center: [55.751244, 37.618423], // Координаты центра карты (Москва)
-        zoom: 10, // Уровень масштабирования
-    });
-
-    // Создание метки
-    const placemark = new ymaps.Placemark(
-        [55.751244, 37.618423], // Координаты метки
-    );
-
-    // Добавление метки на карту
-    map.geoObjects.add(placemark);
-    map.controls.remove('geolocationControl'); // удаляем геолокацию
-    map.controls.remove('searchControl'); // удаляем поиск
-    map.controls.remove('trafficControl'); // удаляем контроль трафика
-    map.controls.remove('typeSelector'); // удаляем тип
-    map.controls.remove('fullscreenControl'); // удаляем кнопку перехода в полноэкранный режим
-    // map.controls.remove('zoomControl'); // удаляем контрол зуммирования
-    map.controls.remove('rulerControl'); // удаляем контрол правил
-    map.behaviors.disable(['scrollZoom']); // отключаем скролл карты
-});
