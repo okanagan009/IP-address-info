@@ -50,7 +50,7 @@ ipInput.addEventListener('keydown', handleKey);
 
 function getData() {
     if (validatIp(ipInput.value)) {
-        fetch(`http://ipwho.is/${ipInput.value}?lang=ru`)
+        fetch(`https://ipwho.is/${ipInput.value}?lang=ru`)
             .then(response => response.json())
             .then(data => setInfo(data))
     }
@@ -63,7 +63,7 @@ function handleKey(e) {
 }
 
 function setInfo(mapData) {
-    console.log(mapData);
+    // console.log(mapData);
     ipInfo.innerText = mapData.ip;
     locationInfo.innerText = mapData.country + " " + mapData.region;
     timezoneInfo.innerText = " " + mapData.timezone.utc;
